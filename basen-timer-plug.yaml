@@ -42,6 +42,19 @@ switch:
     pin: GPIO12
     restore_mode: RESTORE_DEFAULT_OFF
 
+  - platform: template
+    id: auto_mode
+    name: "Auto Cycle"
+    lambda: |-
+      return id(auto_enabled);
+    turn_on_action:
+      - lambda: |-
+          id(auto_enabled)=true;
+    turn_off_action:
+      - lambda: |-
+          id(auto_enabled)=false;
+          id(relay).turn_off();
+
 binary_sensor:
   - platform: gpio
     pin:
@@ -56,22 +69,22 @@ status_led:
 
 number:
   - platform: template
-    id: on_time
-    name: "ON Time (min)"
+    id: on_minutes
+    name: "ON Time"
     optimistic: true
     restore_value: true
     min_value: 1
-    max_value: 999
+    max_value: 240
     step: 1
     initial_value: 15
 
   - platform: template
-    id: off_time
-    name: "OFF Time (min)"
+    id: off_minutes
+    name: "OFF Time"
     optimistic: true
     restore_value: true
     min_value: 1
-    max_value: 999
+    max_value: 240
     step: 1
     initial_value: 45
 
@@ -86,6 +99,16 @@ number:
     initial_value: 8
 
   - platform: template
+    id: start_minute
+    name: "Start Minute"
+    optimistic: true
+    restore_value: true
+    min_value: 0
+    max_value: 59
+    step: 1
+    initial_value: 0
+
+  - platform: template
     id: stop_hour
     name: "Stop Hour"
     optimistic: true
@@ -94,16 +117,32 @@ number:
     max_value: 23
     step: 1
     initial_value: 20
+
+  - platform: template
+    id: stop_minute
+    name: "Stop Minute"
+    optimistic: true
+    restore_value: true
+    min_value: 0
+    max_value: 59
+    step: 1
+    initial_value: 0
     
 globals:
-  - id: cycle_enabled
+  - id: auto_enabled
     type: bool
     restore_value: yes
     initial_value: "false"
-  - id: in_time_window
+
+  - id: relay_phase
     type: bool
     restore_value: no
-    initial_value: "false"
+    initial_value: "true"
+
+  - id: cycle_counter
+    type: uint32_t
+    restore_value: yes
+    initial_value: "0"
 
 button:
   - platform: template
