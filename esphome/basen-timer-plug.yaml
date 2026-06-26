@@ -1,4 +1,4 @@
-# Basen Timer Plug (v0.2.2)
+# Basen Timer Plug (v0.2.3)
 # Lokalny sterownik czasowy dla Sonoff S26 / AIS Dom S26
 # Logika: Auto Cycle ON/OFF z harmonogramem godzinowym
 
@@ -230,7 +230,9 @@ interval:
                     // Przejście do harmonogramu: false → true
                     id(relay_phase) = true;
                     id(phase_start) = millis();
-                    id(relay).turn_on();
+                    if (!id(relay).state) {
+                      id(relay).turn_on();
+                    }
                   } else {
                     // Wyjście z harmonogramu: true → false
                     if (id(relay).state) {
