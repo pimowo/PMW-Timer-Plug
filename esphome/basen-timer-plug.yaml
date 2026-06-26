@@ -69,7 +69,6 @@ switch:
           id(relay_phase) = true;
           id(phase_start) = millis();
           id(relay).turn_on();
-          id(relay).publish_state(true);
     turn_off_action:
       - lambda: |-
           id(auto_enabled) = false;
@@ -196,6 +195,8 @@ interval:
 
                 if (!now.is_valid()) {
                   id(relay).turn_off();
+                  id(relay_phase) = true;
+                  id(phase_start) = millis();
                   return;
                 }
 
