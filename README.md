@@ -144,6 +144,8 @@ Fizyczny przycisk na gniazdku przełącza tryb automatyczny.
 - Relay wyłącza się automatycznie, jeśli czas NTP się nie synchronizuje
 - Po restarcie urządzenia licznik cykli odtwarza poprawną wartość
 - Timer bezpiecznie obsługuje przepełnienie `millis()` po ~49 dniach
+- Po utracie synchronizacji NTP timer resetuje się na pełną fazę ON
+- on_boot nie wymusza włączenia relay - decyzję podejmuje interval
 
 ## Optymalizacja
 
@@ -162,6 +164,7 @@ Fizyczny przycisk na gniazdku przełącza tryb automatyczny.
 - [x] Licznik cykli
 - [ ] text_sensor "Status" (Running/Stopped/Out of schedule/Waiting for time)
 - [ ] sensor "Remaining Time" (pozostały czas)
+- [ ] text_sensor "Current Phase" (ON/OFF)
 - [ ] Wydanie v1.0
 
 ---
@@ -176,12 +179,12 @@ Szczegóły znajdują się w pliku **LICENSE**.
 
 # Ocena kodu
 
-**v0.2.1** - 9,8/10
+**v0.2.1 Stable** - 9,9/10
 
 - ⭐⭐⭐⭐⭐ Czytelność
 - ⭐⭐⭐⭐⭐ Struktura
 - ⭐⭐⭐⭐⭐ Rozbudowa
 - ⭐⭐⭐⭐⭐ Styl
-- ⭐⭐⭐⭐☆ Logika
+- ⭐⭐⭐⭐⭐ Logika
 
-Gotowe do v0.3.0 z sensorami statusu.
+Kod jest spójny i gotowy do rozwijania. Następny krok: v0.3.0 z sensorami statusu.
