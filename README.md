@@ -39,14 +39,15 @@ Dzięki temu urządzenie:
 | Cykliczne ON/OFF | ✅ |
 | Konfigurowany czas ON | ✅ |
 | Konfigurowany czas OFF | ✅ |
-| Harmonogram pracy | 🚧 |
+| Harmonogram z minutami | ✅ |
+| Licznik cykli | ✅ |
 | Strona WWW | ✅ |
 | Home Assistant | ✅ |
 | OTA | ✅ |
 | Praca bez HA | ✅ |
-| Zapamiętywanie ustawień | 🚧 |
-| Licznik cykli | 🚧 |
+| Zapamiętywanie ustawień | ✅ |
 | Pozostały czas | 🚧 |
+| Status (Running/Stopped) | 🚧 |
 
 ---
 
@@ -60,7 +61,7 @@ Dzięki temu urządzenie:
  ├── ON 15 min
  ├── OFF 45 min
  │
-20:00
+ 20:00
  │
  └── Relay OFF
 ```
@@ -97,11 +98,40 @@ Otwórz:
 esphome/basen-timer-plug.yaml
 ```
 
-Uzupełnij dane WiFi.
+Uzupełnij dane WiFi w pliku `secrets.yaml`:
 
-Skompiluj projekt.
+```yaml
+wifi_ssid: "Twoja sieć WiFi"
+wifi_password: "Twoje hasło"
+```
 
-Wgraj firmware.
+Skompiluj projekt:
+
+```bash
+esphome compile esphome/basen-timer-plug.yaml
+```
+
+Wgraj firmware na urządzenie.
+
+---
+
+# Konfiguracja
+
+Po pierwszym starcie dostęp do panelu WWW:
+
+```
+http://<ip-urządzenia>
+```
+
+Gdzie możesz ustawić:
+
+- **ON Time** - czas włączenia (1-240 minut)
+- **OFF Time** - czas wyłączenia (1-240 minut)
+- **Start Hour / Start Minute** - godzina rozruchu harmonogramu
+- **Stop Hour / Stop Minute** - godzina zatrzymania harmonogramu
+- **Auto Cycle** - włącz/wyłącz tryb automatyczny
+
+Fizyczny przycisk na gniazdku przełącza tryb automatyczny.
 
 ---
 
@@ -109,10 +139,11 @@ Wgraj firmware.
 
 - [x] Utworzenie projektu
 - [x] Konfiguracja ESPHome
-- [ ] Cykliczny timer
-- [ ] Harmonogram godzin
-- [ ] Licznik cykli
-- [ ] Pozostały czas
+- [x] Cykliczny timer ON/OFF
+- [x] Harmonogram godzin z minutami
+- [x] Licznik cykli
+- [ ] Sensor "Status" (Running/Stopped/Out of schedule)
+- [ ] Sensor "Remaining" (pozostały czas)
 - [ ] Wydanie v1.0
 
 ---
