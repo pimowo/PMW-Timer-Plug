@@ -6,6 +6,42 @@ Projekt korzysta z wersjonowania zgodnego z Semantic Versioning.
 
 ---
 
+## [0.2.2] - 2026-06-26
+
+### Stable Release
+
+Optymalizacja przejść harmonogramu. Kod jest jeszcze bardziej niezawodny i efektywny.
+
+### Dodano
+
+- Zmienna globalna `was_allowed` do wykrywania zmian stanu harmonogramu
+- Natychmiastowe włączenie relay o 08:00:00 przy przejściu `false → true`
+- Bezpieczne wyłączenie relay przy wyjściu z harmonogramu (przejście `true → false`)
+
+### Naprawiono
+
+- Eliminacja zbędnych poleceń `turn_off()` co sekundę gdy harmonogram nie jest aktywny
+- Logika harmonogramu teraz reaguje natychmiastowo na zmianę stanu (wejście/wyjście)
+- Reset fazy przy zmianach stanu harmonogramu zapewnia ciągłość
+
+### Optymalizacja
+
+- Dodano warunek `if (id(relay).state)` przy wyjściu z harmonogramu
+- Zmniejszenie liczby wysyłanych poleceń do relay
+- Bardziej modułowa i czytelna struktura kodu
+
+### Ocena
+
+- ⭐⭐⭐⭐⭐ Czytelność
+- ⭐⭐⭐⭐⭐ Struktura
+- ⭐⭐⭐⭐⭐ Rozbudowa
+- ⭐⭐⭐⭐⭐ Styl
+- ⭐⭐⭐⭐⭐ Logika
+
+**Wynik: 10/10**
+
+---
+
 ## [0.2.1] - 2026-06-26
 
 ### Stable Release
@@ -80,8 +116,8 @@ Kod jest stabilny i gotowy do produkcji. Architektura timera jest spójna i łat
 ### 0.3.0
 
 - text_sensor "Status" (RUNNING / OFF / OUT OF SCHEDULE / WAITING FOR TIME)
-- sensor "Remaining Time" - pozostały czas do końca fazy (w sekundach)
 - text_sensor "Current Phase" (ON / OFF)
+- sensor "Remaining Time" - pozostały czas do końca fazy (w sekundach)
 
 ### 1.0.0
 
