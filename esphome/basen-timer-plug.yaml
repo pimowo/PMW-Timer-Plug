@@ -14,6 +14,8 @@ esphome:
             id(relay_phase) = true;
             id(phase_start) = millis();
           }
+          // Opublikuj licznik cykli przy starcie
+          id(cycle_counter_sensor).publish_state(id(cycle_counter));
 
 esp8266:
   board: esp01_1m
@@ -67,6 +69,7 @@ switch:
           id(relay_phase) = true;
           id(phase_start) = millis();
           id(relay).turn_on();
+          id(relay).publish_state(true);
     turn_off_action:
       - lambda: |-
           id(auto_enabled) = false;
@@ -192,6 +195,7 @@ interval:
                 auto now = id(ntp_time).now();
 
                 if (!now.is_valid()) {
+                  id(relay).turn_off();
                   return;
                 }
 
@@ -217,6 +221,8 @@ interval:
                 }
 
                 // Oblicz czas trwania bieżącej fazy
+                // millis() przepełnia się po ok. 49 dniach.
+                // Odejmowanie uint32_t pozostaje poprawne również po przepełnieniu.
                 uint32_t elapsed = (millis() - id(phase_start)) / 1000;
                 uint32_t target = id(relay_phase)
                   ? (uint32_t)id(on_minutes).state * 60
